@@ -5,6 +5,8 @@ import pages.SearchPage;
 import pages.ProductPage;
 import pages.ShoppingCartPage;
 import org.junit.Before;
+
+import java.time.Duration;
 import java.util.regex.Pattern;
 import log4j.Log4j;
 import org.junit.After;
@@ -46,6 +48,8 @@ public class MainTest extends TestPage {
 			System.out.println("Login olduğumuz doğrulanmadı.");
 		}
 		getWebDriver().navigate().to(baseUrl);
+		getWebDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		getWebDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(200));
 		mainPage.search();
 		searchPage.scrollDown().loadMore().clickRandom();
 		productPage.price();
