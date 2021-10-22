@@ -6,9 +6,9 @@ public class LoginPage extends PageBase
     public LoginPage(WebDriver driver) {
        super(driver);
     }
-	public static final By EMAIL = By.xpath("//input[@name='LoginEmail']");
-	public static final By PASSWORD = By.xpath("//input[@name='Password']");
-	public static final By SUBMIT = By.id("loginLink");
+	private static final By EMAIL = By.xpath("//input[@name='LoginEmail']");
+	private static final By PASSWORD = By.xpath("//input[@name='Password']");
+	private static final By SUBMIT = By.id("loginLink");
 
     public LoginPage writeEmail() {
     	
@@ -21,4 +21,5 @@ public class LoginPage extends PageBase
     public LoginPage submitButton() {
     	click(SUBMIT); return this;
     }
+
 }

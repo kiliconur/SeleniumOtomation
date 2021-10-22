@@ -1,6 +1,10 @@
 package tests;
 
+import static org.testng.Assert.assertEquals;
+import log4j.Log4j;
 import java.time.Duration;
+
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,8 +22,15 @@ public class TestPage {
     	    options.addArguments("enable-notifications");
     	    options.addArguments("enable-popup-blocking");
     	    setWebDriver(new ChromeDriver(options));
-    	    getWebDriver().navigate().to(baseUrl); 
-    	    webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));  
+    	    getWebDriver().navigate().to(baseUrl);
+    	    PropertyConfigurator.configure("D://log4j.properties");
+    	    Log4j.startLog("Test Başlıyor...");
+    	    System.out.println("Test Başlıyor...");
+    	    assertEquals(webDriver.getCurrentUrl(),baseUrl);
+    	    Log4j.info("Anasayfanın açıldığı doğrulandı.");
+    	    System.out.println("Anasayfanın açıldığı doğrulandı.");
+    	    webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+    	    webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(200));
        }
       public static WebDriver getWebDriver()
       {

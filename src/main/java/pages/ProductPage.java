@@ -13,20 +13,13 @@ public class ProductPage extends PageBase
     public ProductPage(WebDriver driver) {
        super(driver);
     }
-	public static final By RANDOMSIZE = By.xpath("//*[contains(@size,'') and contains(@data-tracking-label,'BedenSecenekleri')]");
-	public static final By ADDCART = By.linkText("SEPETE EKLE");
-	public static final By GOCART = By.xpath("//*[contains(@data-tracking-label,'Sepetim')]");
-	public static final By PRICE = By.className("price");
+    private static final By RANDOMSIZE = By.xpath("//*[contains(@size,'') and contains(@data-tracking-label,'BedenSecenekleri')]");
+    private static final By ADDCART = By.linkText("SEPETE EKLE");
+    private static final By GOCART = By.xpath("//*[contains(@data-tracking-label,'Sepetim')]");
+    private static final By PRICE = By.className("price");
 	
     public ProductPage price() {
     	List<WebElement> price = findElements(PRICE);
-    	System.out.println(price.size());
-    	
-    	for(int i=0;i<price.size();i++)
-    	{
-    		System.out.println(price.get(i).getText());
-    	}
-    	System.out.println("Üründeki fiyat= "+price.get(price.size()-1).getText());
     	initialprice = price.get(price.size()-1).getText();
     	setPrice(initialprice);
     	return this;

@@ -9,10 +9,9 @@ public class MainPage extends PageBase
     public MainPage(WebDriver driver) {
        super(driver);
     }
-	public static final By LOGIN = By.linkText("Giriş Yap");
-	public static final By SEARCHWORD = By.id("search_input");
-	public static final By SEARCH = By.className("searchButton");
-	public static final By SCROLL = By.className("searchButton");
+    private static final By LOGIN = By.linkText("Giriş Yap");
+    private static final By SEARCHWORD = By.id("search_input");
+    private static final By SEARCH = By.className("searchButton");
     public MainPage login() {
     	
     click(LOGIN);     return this;
@@ -24,6 +23,5 @@ public class MainPage extends PageBase
     	
     	return this;
     }
-    
     
 }

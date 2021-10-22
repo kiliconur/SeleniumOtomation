@@ -2,11 +2,7 @@ package pages;
 
 import java.time.Duration;
 import java.util.List;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,23 +14,16 @@ public class ShoppingCartPage extends PageBase
     public ShoppingCartPage(WebDriver driver) {
        super(driver);
     }
-	public static final By SHOPPINGPRICE = By.className("products-area");
-	public static final By ADDCART = By.linkText("SEPETE EKLE");
-	public static final By GOCART = By.xpath("//*[contains(@data-tracking-label,'Sepetim')]");
-	public static final By QUANTITY = By.cssSelector("a[class='oq-up plus']");
-	public static final By REMOVE = By.className("cart-square-link");
-	public static final By CONFIRMREMOVE = By.linkText("Sil");
+    private static final By SHOPPINGPRICE = By.className("products-area");
+    private static final By QUANTITY = By.cssSelector("a[class='oq-up plus']");
+    private static final By REMOVE = By.className("cart-square-link");
+    private static final By CONFIRMREMOVE = By.linkText("Sil");
+    private static final By QUANTITYCONTROL = By.xpath("//*[contains(@data-quantity,'2')]");
+    private static final By QUANTITYZERO = By.linkText("ALIŞVERİŞE BAŞLA");
 	public ShoppingCartPage price() {
     	List<WebElement> cartinfo = findElements(SHOPPINGPRICE);
-    	System.out.println(cartinfo.size());
-    	for(int i=0;i<cartinfo.size();i++)
-    	{
-    		System.out.println("i++"+cartinfo.get(i).getText());
-    	}
-    	
     	String cartprice = cartinfo.get(cartinfo.size()-1).getText().substring(cartinfo.get(cartinfo.size()-1).getText().lastIndexOf("\n"));
     	cartprice.trim();
-    	System.out.println("Sepetteki fiyat= "+cartprice);
     	setPrice(cartprice);
     	return this;
     }
@@ -44,7 +33,8 @@ public class ShoppingCartPage extends PageBase
     	return this;
     }
     public ShoppingCartPage removeCart() {
-    	//click(REMOVE);
+    	click(REMOVE);
+    	new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOfElementLocated(CONFIRMREMOVE));
     	//wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(CONFIRMREMOVE));
     	click(CONFIRMREMOVE);
     	return this;
@@ -55,7 +45,43 @@ public class ShoppingCartPage extends PageBase
     }
     private static void setPrice(String cartprice)
     {
-  	  ShoppingCartPage.cartprice=cartprice;
+    	ShoppingCartPage.cartprice=cartprice;
+    }
+    public boolean isQuantityCorrect()
+    {
+    	try
+    	{
+        	if(findElements(QUANTITYCONTROL).isEmpty()==false)
+        	{
+        		return true;
+        	}
+        	else
+        	{
+        		return false;
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		return false;
+    	}
+    }
+    public boolean isQuantityZero()
+    {
+    	try
+    	{
+        	if(findElements(QUANTITYZERO).isEmpty()==false)
+        	{
+        		return true;
+        	}
+        	else
+        	{
+        		return false;
+        	}
+    	}
+    	catch(Exception e)
+    	{
+    		return false;
+    	}
     }
     
 }
